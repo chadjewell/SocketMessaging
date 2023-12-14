@@ -24,6 +24,7 @@ foreach (string line in response)
 {
     Console.WriteLine(line);
 }
+inSight.loggedIn = true;
 
 // Prompt for Username
 string msg = Console.ReadLine();
@@ -32,6 +33,7 @@ foreach (string line in response)
 {
     Console.WriteLine(line);
 }
+
 
 // Prompt for Password
 msg = Console.ReadLine();

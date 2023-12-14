@@ -13,6 +13,8 @@ namespace SocketMessaging
         private IPAddress _address;
         private IPEndPoint _remoteEP;
         private Socket _socket;
+        private bool _loggedIn;
+        public bool loggedIn {get { return _loggedIn; } set { _loggedIn = value; } }
         // Constructor for the socket client, requires string IP address and int port
         public SocketClient(string ipAddress, int port)
         {
@@ -22,6 +24,7 @@ namespace SocketMessaging
             _socket = new Socket(_address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
             _socket.ReceiveTimeout = 1000;
+            _loggedIn = false;
         }
 
         // Use the connect method to establish a connection with the remote device
@@ -63,7 +66,7 @@ namespace SocketMessaging
             List<byte> byteList = new List<byte>(buffer.Take(bytesRec));            
 
             // While there is more data available, receive it and add it to the list
-            while (_socket.Available > 0)
+            if (!loggedIn)
             {
                 bytesRec = _socket.Receive(buffer);
                 byteList.AddRange(buffer.Take(bytesRec));
